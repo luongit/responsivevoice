@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Demo</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+	<script src="responsivevoice.js"></script>
+</head>
+<body>
+	<select id="lang" class="input input--dropdown js--animations">
+		<option value="UK English Female">UK English Female</option>
+		<option value="UK English Male">UK English Male</option>
+		<option value="US English Female">US English Female</option>
+		<option value="US English Male">US English Male</option>
+	</select>
+
+	<input type="" name="" id="la">
+<input id="btnplay" type="button" value="🔊 Play" />
+<p>
+	When clicking on a highlighted area, the value stays highlighted until after the mouseup event, and would therefore stil be captured by getSelection. This micro-timeout solves the issue. 
+</p>
+
+<script type="text/javascript">
+	$('#btnplay').click(function(){
+		responsiveVoice.speak($('#la').val(),$('#lang').val());
+	});
+
+	function getSelectionText() {
+	    var text = "";
+	    if (window.getSelection) {
+	        text = window.getSelection().toString();
+	    } else if (document.selection && document.selection.type != "Control") { 
+	        text = document.selection.createRange().text;
+	    }
+	    return text;
+	}
+
+	$(document).ready(function (){
+	   $(document).mouseup(function(e){ 
+	      setTimeout(function() { 
+	         responsiveVoice.cancel();
+	         responsiveVoice.speak(getSelectionText(),"US English Male");
+	      }, 1);
+	   });
+	});
+</script>
+</body>
+</html>
